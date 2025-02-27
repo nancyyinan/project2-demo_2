@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数字比较生成角色图片</title>
+  <style>
+    /* 整体页面样式 */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    
+    /* 内容容器 */
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    /* 数字输入框样式 */
+    input[type="number"] {
+      width: 70px;
+      font-size: 24px;
+      text-align: center;
+      padding: 10px;
+      margin: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    
+    input[type="number"]:focus {
+      border-color: #007BFF;
+    }
+    
+    /* 提交按钮样式 */
+    #submitButton {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    #submitButton:hover {
+      background-color: #0056b3;
+    }
+    
+    /* 图片样式 */
+    #displayedImage {
+      margin-top: 20px;
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: none; /* 初始隐藏 */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Number comparison generates character pictures</h1>
+    <!-- 左右两个数字输入框 -->
+    <input type="number" id="leftInput" placeholder="左边" value="1">
+    <input type="number" id="rightInput" placeholder="右边" value="5">
+    <br>
+    <!-- 点击按钮触发图片生成 -->
+    <button onclick="displayImage()" id="submitButton">Who is this</button>
+    <br>
+    <!-- 用于显示图片 -->
+    <img id="displayedImage" src="" alt="角色图片">
+  </div>
+
+  <script>
+    function displayImage() {
+      // 获取左右输入的数值，并转换为数字类型
+      const leftValue = parseFloat(document.getElementById("leftInput").value);
+      const rightValue = parseFloat(document.getElementById("rightInput").value);
+      const imgElement = document.getElementById("displayedImage");
+      
+      // 判断数字大小并设置对应图片
+      if (leftValue > rightValue) {
+        // 如果左边数字大，显示黑色角色图片
+        imgElement.src =  "images2/SHExUkVsU0FOMTdGd2poTHRTb1pRR3N0eXMzYjd6aGdiQ3JCb2RDVE1rWT0.png"; // 替换为你的黑色角色图片 URL
+        imgElement.alt = "黑色角色";
+      } else if (leftValue < rightValue) {
+        // 如果右边数字大，显示白色角色图片
+        imgElement.src = "images/Cookie0506-call_user.webp"; // 替换为你的白色角色图片 URL
+        imgElement.alt = "白色角色";
+      } else {
+        // 数字相等时，清空图片或显示默认状态
+        imgElement.src = "";
+        imgElement.alt = "没有图片";
+      }
+      
+      // 根据是否设置了图片 URL 来显示或隐藏图片
+      if (imgElement.src) {
+        imgElement.style.display = "block";
+      } else {
+        imgElement.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
