@@ -49,8 +49,8 @@
     #submitButton {
       padding: 10px 20px;
       font-size: 18px;
-      background-color: #007BFF;
-      color: #fff;
+      background-color: #e1ff00;
+      color: #1d2196;
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -58,16 +58,24 @@
     }
     
     #submitButton:hover {
-      background-color: #0056b3;
+      background-color: #171dd7;
+      color: #eaeaea;
+      
     }
     
     /* 图片样式 */
     #displayedImage {
       margin-top: 20px;
-      max-width: 100%;
+      max-width: 200px;
       height: auto;
       border-radius: 10px;
       display: none; /* 初始隐藏 */
+    }
+
+    @media (max-width: 600px) {
+        h1{
+            font-size: 1.5rem;
+        }
     }
   </style>
 </head>
@@ -75,14 +83,14 @@
   <div class="container">
     <h1>Number comparison generates character pictures</h1>
     <!-- 左右两个数字输入框 -->
-    <input type="number" id="leftInput" placeholder="左边" value="1">
-    <input type="number" id="rightInput" placeholder="右边" value="5">
+    <input type="number" id="leftInput" placeholder="左边" value="0">
+    <input type="number" id="rightInput" placeholder="右边" value="0">
     <br>
     <!-- 点击按钮触发图片生成 -->
-    <button onclick="displayImage()" id="submitButton">Who is this</button>
+    <button onclick="displayImage()" id="submitButton">Who is this?</button>
     <br>
     <!-- 用于显示图片 -->
-    <img id="displayedImage" src="" alt="角色图片">
+    <img id="displayedImage" src="" alt="character">
   </div>
 
   <script>
@@ -96,15 +104,15 @@
       if (leftValue > rightValue) {
         // 如果左边数字大，显示黑色角色图片
         imgElement.src =  "images2/SHExUkVsU0FOMTdGd2poTHRTb1pRR3N0eXMzYjd6aGdiQ3JCb2RDVE1rWT0.png"; // 替换为你的黑色角色图片 URL
-        imgElement.alt = "黑色角色";
+        imgElement.alt = "Shadow Milk Cookie";
       } else if (leftValue < rightValue) {
         // 如果右边数字大，显示白色角色图片
         imgElement.src = "images/Cookie0506-call_user.webp"; // 替换为你的白色角色图片 URL
-        imgElement.alt = "白色角色";
+        imgElement.alt = "Pure Vanillia Cookie";
       } else {
         // 数字相等时，清空图片或显示默认状态
-        imgElement.src = "";
-        imgElement.alt = "没有图片";
+        imgElement.src = "images/UFRFS0Y3V2g3SHRlbXFvdk1XM2hiQ1R4ZktQTlFsNlByQldyRzlzSjlWbz0.jpg";
+        imgElement.alt = "The light of enlightment";
       }
       
       // 根据是否设置了图片 URL 来显示或隐藏图片
