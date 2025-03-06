@@ -429,14 +429,7 @@
         const inputTime = parseInt(timeRange.value);
 
         // 1) 生的 (raw)
-        if (
-          inputTemp < currentFood.minTemp &&
-          inputTime < currentFood.minTime
-        ) {
-          foodImage.src = currentFood.rawImg;
-          resultMessage.textContent = "Hmm... it's still raw!";
-          return;
-        }
+       
 
         // 2) 完美 (perfect)
         if (
