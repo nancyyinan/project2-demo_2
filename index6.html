@@ -63,15 +63,10 @@
       #instructions {
         width: 80%;
         max-width: 600px;
-        margin-bottom: 3rem;
+        margin: 0 auto 20px auto;
         font-size: 1rem;
         text-align: center;
         line-height: 1.5;
-      }
-
-      #instructions p {
-        font-family: "collier-black", sans-serif;
-        
       }
 
       /* === 按钮通用样式 === */
@@ -190,7 +185,10 @@
         font-weight: bold;
         height: 30px; /* 预留空间防止闪跳 */
         text-align: center;
+        margin-bottom: 3rem;
       }
+
+      
 
       /* === 响应式调整 (移动端) === */
       @media (max-width: 600px) {
@@ -220,7 +218,7 @@
     <div id="instructions">
       <p>
         Try to guess the right temperature and time for each food using the sliders
-        below. 
+        below.
       </p>
     </div>
 
@@ -239,7 +237,7 @@
             type="range"
             id="tempRange"
             min="0"
-            max="300"
+            max="250"
             step="5"
             value="150"
           />
@@ -255,7 +253,7 @@
             type="range"
             id="timeRange"
             min="0"
-            max="60"
+            max="25"
             step="1"
             value="10"
           />
@@ -311,7 +309,6 @@
         },
         {
           name: "potato",
-          // 这里假设 180 ~ 200°C, 18 ~ 22 分钟
           minTemp: 180,
           maxTemp: 200,
           minTime: 18,
@@ -384,26 +381,51 @@
         const inputTemp = parseInt(tempRange.value);
         const inputTime = parseInt(timeRange.value);
 
-        // 判断是否在范围内
-        if (
-          inputTemp < currentFood.minTemp &&
-          inputTime < currentFood.minTime
-        ) {
-          // 温度 & 时间都太低 => 未烤熟
+        // 1) 生的 (raw)
+        if (inputTemp < currentFood.minTemp && inputTime < currentFood.minTime) {
           foodImage.src = currentFood.rawImg;
           resultMessage.textContent = "Hmm... it's still raw!";
-        } else if (
+          return;
+        }
+
+        // 2) 完美 (perfect)
+        if (
           inputTemp >= currentFood.minTemp &&
           inputTemp <= currentFood.maxTemp &&
           inputTime >= currentFood.minTime &&
           inputTime <= currentFood.maxTime
         ) {
-          // 在范围内 => 完美烤出来
           foodImage.src = currentFood.perfectImg;
           resultMessage.textContent = "You did it!";
+          return;
+        }
+
+        // 3) 糊掉 (burnt)
+        foodImage.src = currentFood.burntImg;
+
+        // 在这里给用户更具体的提示：温度太高/太低，时间太长/太短
+        let suggestions = [];
+
+        // 检查温度
+        if (inputTemp < currentFood.minTemp) {
+          suggestions.push("Temperature is too low");
+        } else if (inputTemp > currentFood.maxTemp) {
+          suggestions.push("Temperature is too high");
+        }
+
+        // 检查时间
+        if (inputTime < currentFood.minTime) {
+          suggestions.push("Time is too short");
+        } else if (inputTime > currentFood.maxTime) {
+          suggestions.push("Time is too long");
+        }
+
+        // 如果有具体提示，就拼接起来
+        if (suggestions.length > 0) {
+          resultMessage.textContent =
+            suggestions.join(" and ") + ". Please adjust and try again!";
         } else {
-          // 否则 => 烤糊了
-          foodImage.src = currentFood.burntImg;
+          // 如果理论上没有提示，就给个默认值
           resultMessage.textContent = "Oh... Try again!";
         }
       }
