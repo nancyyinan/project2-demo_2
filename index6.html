@@ -117,7 +117,7 @@
       }
 
       .slider-label {
-        font-size: 1.2rem;
+        font-size: 1.rem;
         margin-bottom: 5px;
       }
 
@@ -212,6 +212,37 @@
         }
         #randomFoodName {
           font-size: 1.6rem;
+        }
+
+        .slider-label {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+          }
+
+        /* 让滑块本身更宽一些，高度更大，方便触控 */
+        input[type="range"] {
+          width: 240px; /* 让它比桌面端更宽一点 */
+          height: 12px; /* 更高的轨道，方便大拇指点按 */
+        }
+
+        /* 自定义滑块拇指大小 - WebKit内核 */
+        input[type="range"]::-webkit-slider-thumb {
+          width: 28px; /* 拇指直径 */
+          height: 28px; /* 拇指直径 */
+          border: 2px solid #fff;
+          border-radius: 50%;
+          background: #e03b3f;
+          cursor: pointer;
+        }
+
+        /* 自定义滑块拇指大小 - Firefox (Moz) */
+        input[type="range"]::-moz-range-thumb {
+          width: 28px;
+          height: 28px;
+          border: 2px solid #fff;
+          border-radius: 50%;
+          background: #e03b3f;
+          cursor: pointer;
         }
       }
     </style>
