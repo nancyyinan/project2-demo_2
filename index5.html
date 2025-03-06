@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Air Fryer Recipe</title>
+
+    <!-- Typekit 字体 -->
+    <link rel="stylesheet" href="https://use.typekit.net/htx6brv.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/htx6brv.css" />
+
+    <style>
+      @import url("https://use.typekit.net/htx6brv.css");
+
+      /* === 全局样式 === */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "collier-black", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        background: #f8f4d7;
+        color: #7e4033;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+      }
+
+      /* === 头部区域 === */
+      header {
+        width: 100%;
+        background: #e03b3f;
+        color: #fff;
+        padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px; /* 与下方内容稍作区隔 */
+      }
+      header h1 {
+        font-family: "wigwag-deluxe", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        color: #eeb359;
+        margin: 0;
+        font-size: 5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      header p {
+        margin: 5px 0 0;
+        font-size: 1rem;
+        font-weight: normal;
+      }
+
+      /* === 简短说明段落 === */
+      #instructions {
+        width: 80%;
+        max-width: 600px;
+        margin: 0 auto 20px auto;
+        font-size: 1rem;
+        text-align: center;
+        line-height: 1.5;
+      }
+
+      /* === 按钮通用样式 === */
+      button {
+        font-family: "collier-black", sans-serif;
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s;
+        margin: 10px;
+      }
+
+      /* === “RANDOM FOOD” 按钮（红色背景） === */
+      #randomFoodBtn {
+        background: #e03b3f;
+        color: #fff;
+      }
+      #randomFoodBtn:hover {
+        background: #7e4033;
+      }
+
+      /* === “FRESHLY AIR-FRIED!” 按钮（棕色背景） === */
+      #cookBtn {
+        background: #7e4033;
+        color: #fff;
+      }
+      #cookBtn:hover {
+        background: #5c2d24;
+      }
+
+      /* === 随机食物名称 === */
+      #randomFoodName {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 10px 0;
+        text-transform: uppercase;
+      }
+
+      /* === 控制区域 (滑块 + 数值显示) === */
+      #controls {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin: 10px 0;
+        align-items: center;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .slider-label {
+        font-size: 1rem;
+        margin-bottom: 5px;
+      }
+
+      .slider-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .slider-value {
+        font-size: 1rem;
+        min-width: 40px; /* 确保数值区域不抖动 */
+        text-align: center;
+      }
+
+      /* === 滑块样式 (温度 & 时间) === */
+      input[type="range"] {
+        -webkit-appearance: none;
+        width: 200px;
+        height: 6px;
+        background: #ccc;
+        border-radius: 3px;
+        outline: none;
+        transition: background 0.3s;
+      }
+      input[type="range"]:hover {
+        background: #bbb;
+      }
+      /* 滑块小圆点 */
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #e03b3f;
+        cursor: pointer;
+        border: 2px solid #fff;
+      }
+      input[type="range"]::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #e03b3f;
+        cursor: pointer;
+        border: 2px solid #fff;
+      }
+
+      /* === 显示食物图片的区域 === */
+      #foodContainer {
+        margin: 20px 0;
+        width: 200px;
+        height: 200px;
+        background: #f8f4d7;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #foodImage {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      /* === 响应式调整 (移动端) === */
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 2rem;
+        }
+        header p {
+          font-size: 0.8rem;
+        }
+        button {
+          font-size: 1rem;
+        }
+        #randomFoodName {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 头部 -->
+    <header>
+      <h1>Air Fryer Recipe</h1>
+      <p>CAN YOU PERFECTLY AIR-FRY A DELICIOUS MEAL?</p>
+    </header>
+
+    <!-- 简短说明 -->
+    <div id="instructions">
+      <p>
+        Try to guess the right temperature and time for each food using the sliders
+        below. 
+      </p>
+    </div>
+
+    <!-- 随机食物按钮 -->
+    <button id="randomFoodBtn">RANDOM FOOD</button>
+    <!-- 随机生成的食物名称 -->
+    <div id="randomFoodName">???</div>
+
+    <!-- 温度 & 时间滑块 -->
+    <div id="controls">
+      <!-- 温度控制组 -->
+      <div class="control-group">
+        <div class="slider-label">Temp (°C)</div>
+        <div class="slider-container">
+          <input
+            type="range"
+            id="tempRange"
+            min="0"
+            max="300"
+            step="5"
+            value="150"
+          />
+          <span id="tempValue" class="slider-value">150</span>
+        </div>
+      </div>
+
+      <!-- 时间控制组 -->
+      <div class="control-group">
+        <div class="slider-label">Time (min)</div>
+        <div class="slider-container">
+          <input
+            type="range"
+            id="timeRange"
+            min="0"
+            max="30"
+            step="1"
+            value="10"
+          />
+          <span id="timeValue" class="slider-value">10</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 显示食物图片 -->
+    <div id="foodContainer">
+      <img id="foodImage" src="food/questionmark.svg" alt="Question Mark" />
+    </div>
+
+    <!-- 烹饪按钮（显示结果） -->
+    <button id="cookBtn">FRESHLY AIR-FRIED!</button>
+
+    <script>
+      // 5种食物的时间 & 温度范围，以及对应的图片
+      // rawImg: 未烤熟, perfectImg: 完美烤出来, burntImg: 糊掉
+      const foods = [
+        {
+          name: "bacon",
+          minTemp: 180,
+          maxTemp: 200,
+          minTime: 8,
+          maxTime: 10,
+          rawImg: "food/bacon0.png",
+          perfectImg: "food/bacon.png",
+          burntImg: "food/bacon2.png",
+        },
+        {
+          name: "chips",
+          minTemp: 200,
+          maxTemp: 250,
+          minTime: 15,
+          maxTime: 20,
+          rawImg: "food/chips0.png",
+          perfectImg: "food/chips.png",
+          burntImg: "food/chips2.png",
+        },
+        {
+          name: "onionRing",
+          minTemp: 180,
+          maxTemp: 200,
+          minTime: 8,
+          maxTime: 10,
+          rawImg: "food/onionRing0.png",
+          perfectImg: "food/onionRing.png",
+          burntImg: "food/onionRing2.png",
+        },
+        {
+          name: "potato",
+          minTemp: 180,
+          maxTemp: 200,
+          minTime: 18,
+          maxTime: 22,
+          rawImg: "food/potato0.png",
+          perfectImg: "food/potato.png",
+          burntImg: "food/potato2.png",
+        },
+        {
+          name: "salmon",
+          minTemp: 150,
+          maxTemp: 200,
+          minTime: 8,
+          maxTime: 12,
+          rawImg: "food/salmon0.png",
+          perfectImg: "food/salmon.png",
+          burntImg: "food/salmon2.png",
+        },
+      ];
+
+      let currentFood = null;
+
+      const randomFoodBtn = document.getElementById("randomFoodBtn");
+      const cookBtn = document.getElementById("cookBtn");
+      const foodImage = document.getElementById("foodImage");
+      const randomFoodName = document.getElementById("randomFoodName");
+
+      // 滑块 & 数值显示
+      const tempRange = document.getElementById("tempRange");
+      const timeRange = document.getElementById("timeRange");
+      const tempValue = document.getElementById("tempValue");
+      const timeValue = document.getElementById("timeValue");
+
+      // 初始化显示滑块数值
+      tempValue.textContent = tempRange.value;
+      timeValue.textContent = timeRange.value;
+
+      // 监听滑块变动，实时更新数值
+      tempRange.addEventListener("input", () => {
+        tempValue.textContent = tempRange.value;
+      });
+      timeRange.addEventListener("input", () => {
+        timeValue.textContent = timeRange.value;
+      });
+
+      // 随机生成食物
+      function pickRandomFood() {
+        const randomIndex = Math.floor(Math.random() * foods.length);
+        currentFood = foods[randomIndex];
+        // 更新页面显示
+        randomFoodName.textContent = currentFood.name;
+        foodImage.src = "food/questionmark.svg";
+        foodImage.alt = "Question Mark";
+        // 重置按钮文字
+        cookBtn.textContent = "FRESHLY AIR-FRIED!";
+        // 重置滑块
+        tempRange.value = 150;
+        timeRange.value = 10;
+        tempValue.textContent = 150;
+        timeValue.textContent = 10;
+      }
+
+      // 点击“FRESHLY AIR-FRIED!”后，判断输入是否在范围内
+      function cookFood() {
+        if (!currentFood) {
+          alert("Please click RANDOM FOOD first!");
+          return;
+        }
+
+        const inputTemp = parseInt(tempRange.value);
+        const inputTime = parseInt(timeRange.value);
+
+        // 1) 生的 (raw)
+        if (inputTemp < currentFood.minTemp && inputTime < currentFood.minTime) {
+          foodImage.src = currentFood.rawImg;
+          cookBtn.textContent = "Hmm... it's still raw!";
+          return;
+        }
+
+        // 2) 完美 (perfect)
+        if (
+          inputTemp >= currentFood.minTemp &&
+          inputTemp <= currentFood.maxTemp &&
+          inputTime >= currentFood.minTime &&
+          inputTime <= currentFood.maxTime
+        ) {
+          foodImage.src = currentFood.perfectImg;
+          cookBtn.textContent = "Congratulations on being freshly made!";
+          return;
+        }
+
+        // 3) 糊掉 (burnt) - 给出详细提示
+        foodImage.src = currentFood.burntImg;
+
+        let suggestions = [];
+
+        // 检查温度
+        if (inputTemp < currentFood.minTemp) {
+          suggestions.push("Temperature is too low");
+        } else if (inputTemp > currentFood.maxTemp) {
+          suggestions.push("Temperature is too high");
+        }
+
+        // 检查时间
+        if (inputTime < currentFood.minTime) {
+          suggestions.push("Time is too short");
+        } else if (inputTime > currentFood.maxTime) {
+          suggestions.push("Time is too long");
+        }
+
+        // 如果都不符合，则说明可能一个在范围内，另一个超出范围
+        // 但此时也属于“烤糊”逻辑，所以同样提示需要调整
+        if (suggestions.length > 0) {
+          cookBtn.textContent =
+            suggestions.join(" and ") + ". Please adjust and try again!";
+        } else {
+          // 理论上不会进入这里，但以防万一
+          cookBtn.textContent = "Oh... Try again!";
+        }
+      }
+
+      // 绑定事件
+      randomFoodBtn.addEventListener("click", pickRandomFood);
+      cookBtn.addEventListener("click", cookFood);
+    </script>
+  </body>
+</html>
