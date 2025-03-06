@@ -19,9 +19,10 @@
       body {
         margin: 0;
         padding: 0;
-        font-family: "collier-black", sans-serif;
+        font-family: "winco", sans-serif;
         font-weight: 700;
         font-style: normal;
+       
         background: #f8f4d7;
         color: #7e4033;
         display: flex;
@@ -57,6 +58,7 @@
         margin: 5px 0 0;
         font-size: 1rem;
         font-weight: normal;
+        font-family: "collier-black", sans-serif;
       }
 
       /* === 简短说明段落 === */
@@ -67,6 +69,7 @@
         font-size: 1rem;
         text-align: center;
         line-height: 1.5;
+        font-size: 1.5rem;
       }
 
       /* === 按钮通用样式 === */
@@ -188,15 +191,14 @@
         margin-bottom: 3rem;
       }
 
-      
-
       /* === 响应式调整 (移动端) === */
       @media (max-width: 600px) {
         header h1 {
-          font-size: 2rem;
+          font-size: 2.5rem;
         }
         header p {
-          font-size: 0.8rem;
+          font-size: 0.6rem;
+          align-items: center;
         }
         button {
           font-size: 1rem;
@@ -217,8 +219,8 @@
     <!-- 简短说明 -->
     <div id="instructions">
       <p>
-        Try to guess the right temperature and time for each food using the sliders
-        below.
+        Try to guess the right temperature and time for each food using the
+        sliders below.
       </p>
     </div>
 
@@ -382,7 +384,10 @@
         const inputTime = parseInt(timeRange.value);
 
         // 1) 生的 (raw)
-        if (inputTemp < currentFood.minTemp && inputTime < currentFood.minTime) {
+        if (
+          inputTemp < currentFood.minTemp &&
+          inputTime < currentFood.minTime
+        ) {
           foodImage.src = currentFood.rawImg;
           resultMessage.textContent = "Hmm... it's still raw!";
           return;
