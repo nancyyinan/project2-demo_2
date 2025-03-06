@@ -452,6 +452,7 @@
         // 检查温度
         if (inputTemp < currentFood.minTemp) {
           suggestions.push("Temperature is too low");
+          foodImage.src = currentFood.rawImg;
         } else if (inputTemp > currentFood.maxTemp) {
           suggestions.push("Temperature is too high");
         }
